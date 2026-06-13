@@ -7,7 +7,7 @@ const SocketContext = createContext(null);
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
-  const { user } = useAuth();
+  const { user, API_BASE_URL } = useAuth();
 
   useEffect(() => {
     // Only connect socket if user is authenticated
@@ -20,7 +20,7 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const socketUrl = 'http://localhost:5000';
+    const socketUrl = API_BASE_URL;
     const newSocket = io(socketUrl, {
       transports: ['websocket'],
       autoConnect: true,

@@ -31,7 +31,7 @@ export default function AgentDashboard() {
   const [copiedSessionId, setCopiedSessionId] = useState(null);
   const [loadingAction, setLoadingAction] = useState(false);
 
-  const { user, logout, API_URL } = useAuth();
+  const { user, logout, API_URL, API_BASE_URL } = useAuth();
   const { socket } = useSocket();
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -672,7 +672,7 @@ export default function AgentDashboard() {
                           <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Recording</span>
                           {selectedHistorySession.recordingPath ? (
                             <a
-                              href={`http://localhost:5000${selectedHistorySession.recordingPath}`}
+                              href={`${API_BASE_URL}${selectedHistorySession.recordingPath}`}
                               download
                               className="text-xs font-bold text-brand-purple hover:underline flex items-center gap-1 mt-1.5"
                             >
@@ -719,7 +719,7 @@ export default function AgentDashboard() {
                                     <div className="mt-1.5 p-1.5 rounded bg-slate-950/50 border border-slate-800 flex items-center justify-between">
                                       <span className="text-[10px] text-slate-400 truncate max-w-[150px]">{m.fileName}</span>
                                       <a
-                                        href={`http://localhost:5000${m.fileUrl}`}
+                                        href={`${API_BASE_URL}${m.fileUrl}`}
                                         download
                                         className="text-[10px] text-indigo-400 hover:underline flex items-center gap-0.5"
                                       >

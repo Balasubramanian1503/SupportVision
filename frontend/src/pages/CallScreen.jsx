@@ -13,7 +13,7 @@ export default function CallScreen() {
   const { id: sessionId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, API_URL } = useAuth();
+  const { user, API_URL, API_BASE_URL } = useAuth();
   const { socket, isConnected } = useSocket();
   const { showToast } = useToast();
 
@@ -802,7 +802,7 @@ export default function CallScreen() {
                           <div className="flex items-center gap-1.5 overflow-hidden">
                             {m.fileType?.startsWith('image/') ? (
                               <img 
-                                src={`http://localhost:5000${m.fileUrl}`} 
+                                src={`${API_BASE_URL}${m.fileUrl}`} 
                                 alt="Shared file" 
                                 className="w-8 h-8 rounded object-cover border border-white/5 shrink-0"
                               />
@@ -812,7 +812,7 @@ export default function CallScreen() {
                             <span className="text-[10px] text-slate-300 font-semibold truncate max-w-[120px]">{m.fileName}</span>
                           </div>
                           <a
-                            href={`http://localhost:5000${m.fileUrl}`}
+                            href={`${API_BASE_URL}${m.fileUrl}`}
                             download
                             className="p-1 hover:bg-slate-800 rounded text-indigo-400 hover:text-indigo-300"
                           >

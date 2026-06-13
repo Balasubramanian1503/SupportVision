@@ -7,7 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_URL = 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+  const API_URL = `${API_BASE_URL}/api`;
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -103,7 +104,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, register, logout, API_URL }}>
+    <AuthContext.Provider value={{ user, loading, error, login, register, logout, API_URL, API_BASE_URL }}>
       {children}
     </AuthContext.Provider>
   );
