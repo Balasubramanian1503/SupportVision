@@ -69,8 +69,11 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
       return data.user;
     } catch (err) {
-      setError(err.message);
-      throw err;
+      const message = err.message === 'Failed to fetch'
+        ? 'Unable to connect to the server. Please check if your backend is running.'
+        : err.message;
+      setError(message);
+      throw new Error(message);
     }
   };
 
@@ -93,8 +96,11 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
       return data.user;
     } catch (err) {
-      setError(err.message);
-      throw err;
+      const message = err.message === 'Failed to fetch'
+        ? 'Unable to connect to the server. Please check if your backend is running.'
+        : err.message;
+      setError(message);
+      throw new Error(message);
     }
   };
 
