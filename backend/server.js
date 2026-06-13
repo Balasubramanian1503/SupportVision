@@ -469,11 +469,22 @@ io.on('connection', (socket) => {
   socket.on('join-room', async ({ sessionId, userId, displayName, role }) => {
     currentSessionId = sessionId;
     userDisplayName = displayName || 'Guest';
-    socket.join(sessionId);
-
-    console.log(`Socket [${socket.id}] joined room: ${sessionId} as ${displayName} (${role})`);
 
     try {
+      // Assert session exists in database and is ACTIVE
+      const session = await prisma.session.findUnique({
+        where: { id: sessionId }
+      });
+
+      if (!session || session.status !== 'ACTIVE') {
+        console.warn(`Socket [${socket.id}] tried to join invalid or inactive session: ${sessionId}`);
+        socket.emit('error', 'Session not found or already closed');
+        return;
+      }
+
+      socket.join(sessionId);
+      console.log(`Socket [${socket.id}] joined room: ${sessionId} as ${displayName} (${role})`);
+
       // 1. Log participant entry in database
       const participant = await prisma.sessionParticipant.create({
         data: {
@@ -511,6 +522,7 @@ io.on('connection', (socket) => {
     } catch (error) {
       console.error('Error logging participant join:', error);
       errorsCount++;
+      socket.emit('error', 'An error occurred while joining the session');
     }
   });
 
@@ -542,6 +554,16 @@ io.on('connection', (socket) => {
     if (!sessionId) return;
 
     try {
+      // Assert session exists in database
+      const session = await prisma.session.findUnique({
+        where: { id: sessionId }
+      });
+
+      if (!session) {
+        console.warn(`ChatMessage received for invalid session: ${sessionId}`);
+        return;
+      }
+
       // Save message to Database
       const savedMsg = await prisma.chatMessage.create({
         data: {
