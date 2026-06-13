@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SupportVision
 
 SupportVision is a production-grade, real-time video support platform designed for low-latency diagnostic sessions. It routes all audio, video, and screen-sharing media directly through an integrated custom STUN/TURN server, ensuring zero peer-to-peer leaks. The platform features user authentication, a live agent dashboard, real-time file sharing, and video session recording.
@@ -133,3 +134,6 @@ npm run dev
 8. Use the control bar to mute microphone, toggle camera, share screens, or send diagnostic files in the chat drawer.
 9. As the Agent, click the **Record** button to archive the shared audio and video feed. Click **Stop** to process and save the file.
 10. End the call. Go to the **Call History** tab in the Agent Dashboard to view the participant list, chat transcripts, and download the call recording.
+=======
+# SupportVision
+>>>>>>> d2bc1c836b645d051fb75e0e1a561259297c843e
